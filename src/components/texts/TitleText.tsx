@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TextStyle, View } from 'react-native';
-import { colors, GLOBAL_KEYS } from '~/constants';
+import {StyleSheet, Text, TextStyle, View} from 'react-native';
+import {colors, GLOBAL_KEYS} from '~/constants';
 
 interface TitleTextProps {
   text?: string | number;
@@ -24,5 +24,5 @@ const styles = StyleSheet.create({
   text: {
     fontSize: GLOBAL_KEYS.TEXT_SIZE_TITLE,
     fontWeight: '500',
-  } ,
+  },
 });

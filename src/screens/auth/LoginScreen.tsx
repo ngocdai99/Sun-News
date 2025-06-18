@@ -92,7 +92,8 @@ const LoginScreen: React.FC = () => {
 
         <Row>
           <Text>Don't have an account?</Text>
-          <Pressable>
+          <Pressable
+            onPress={() => navigation.navigate(ScreenName.SignUpScreen)}>
             <Text style={styles.signUp}> Sign Up</Text>
           </Pressable>
         </Row>
