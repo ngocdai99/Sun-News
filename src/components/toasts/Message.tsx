@@ -6,6 +6,7 @@ import {NormalText} from '../texts/NormalText';
 import {TitleText} from '../texts/TitleText';
 import {ToastType, toastColors} from '~/types/Type';
 import { Row } from '../containers/Row';
+import { Column } from '../containers/Column';
 
 type MessageProps = {
   type: ToastType;
@@ -62,10 +63,10 @@ const Message: React.FC<MessageProps> = ({
     <Animated.View
       style={[styles.container, {opacity, transform: [{translateY}]}]}>
       <View style={[styles.type, {backgroundColor: toastColors[type]}]} />
-      <Row>
+      <Column style={styles.content}>
         <TitleText text={title} style={{fontWeight: '700', fontSize: 14}} />
         <NormalText text={message} />
-      </Row>
+      </Column>
     </Animated.View>
   );
 };
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     width: widthScreen * 0.9,
     flexDirection: 'row',
     gap: 12,
-    borderRadius: 10,
+    borderRadius: 12,
     backgroundColor: '#FFFFFF',
 
     // shadow iOS
@@ -90,15 +91,15 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   content: {
-    paddingVertical: 5,
+    paddingVertical: 8,
     flexDirection: 'column',
   },
   type: {
     backgroundColor: colors.success,
-    width: 5,
+    width: 6,
     height: '100%',
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
   },
 });
 

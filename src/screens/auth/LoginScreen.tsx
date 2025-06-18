@@ -29,8 +29,8 @@ const schema = yup.object().shape({
 const LoginScreen: React.FC = () => {
   const navigation = useNavigation<any>();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('ngocdaibui99@gmail.com');
+  const [password, setPassword] = useState('123456');
   const [errors, setErrors] = useState<{email?: string; password?: string}>({});
 
   const validate = async () => {
@@ -85,7 +85,7 @@ const LoginScreen: React.FC = () => {
           placeholder=""
           validationMessage={errors.password ? errors.password : ''}
         />
-        <PrimaryButton title="Sign in" />
+        <PrimaryButton title="Sign in" onPress={onSubmit} />
 
         <Pressable>
           <NormalText text="Forgot Password?" />
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   signUp: {
-    color: '#007AFF',
+    color: colors.primary,
     fontWeight: 'bold',
   },
   support: {

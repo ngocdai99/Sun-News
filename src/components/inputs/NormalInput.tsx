@@ -11,7 +11,7 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; 
 import {Column} from '~/components';
 import LabelInput from '~/components/inputs/LabelInput';
-import {colors} from '~/constants';
+import {colors, GLOBAL_KEYS} from '~/constants';
 
 
 interface NormalInputProps extends TextInputProps {
@@ -32,7 +32,7 @@ export const NormalInput: React.FC<NormalInputProps> = ({
   onChangeText,
   validationMessage,
   secureTextEntry = false,
-  style,
+  style = {},
   editable = true,
   keyboardType = 'default',
   onSubmitEditing,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   validationText: {
     color: colors.red800,
-    fontSize: 12,
+    fontSize: GLOBAL_KEYS.TEXT_SIZE_DEFAULT,
     marginTop: 4,
   },
 });
