@@ -1,0 +1,10 @@
+export const GLOBAL_KEYS = Object.freeze({
+  MAX_QUANTITY: 99,
+  MIN_QUANTITY: 0,
+
+  TEXT_SIZE_SMALL: 12,
+  TEXT_SIZE_DEFAULT: 14,
+  TEXT_SIZE_TITLE: 16,
+  TEXT_SIZE_HEADER: 18,
+
+})
