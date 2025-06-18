@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import * as yup from 'yup';
 import {Toaster} from '~/utils/toaster.ts';
-import {colors} from '~/constants';
+import {colors, ScreenName} from '~/constants';
 import {NormalInput, NormalText, PrimaryButton, Row} from '~/components';
 
 const schema = yup.object().shape({
@@ -52,11 +52,10 @@ const LoginScreen: React.FC = () => {
     const isValid = await validate();
     if (!isValid) return;
 
-    Toaster.message.show({
-      title: 'Login successfully',
+    Toaster.toast.show({
       message: 'You have been logged in',
     });
-    navigation.navigate('HomeScreen');
+    navigation.navigate(ScreenName.HomeScreen);
   };
 
   return (
@@ -97,8 +96,6 @@ const LoginScreen: React.FC = () => {
             <Text style={styles.signUp}> Sign Up</Text>
           </Pressable>
         </Row>
-
-        <NormalText text="Contact support via email: sunnews@gmail.com" />
       </View>
     </ImageBackground>
   );

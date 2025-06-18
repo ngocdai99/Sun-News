@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
-import {colors} from '~/constants';
+import {colors, GLOBAL_KEYS} from '~/constants';
 import {widthScreen} from '~/utils/scale';
 import {NormalText} from '../texts/NormalText';
 import {TitleText} from '../texts/TitleText';
@@ -64,8 +64,8 @@ const Message: React.FC<MessageProps> = ({
       style={[styles.container, {opacity, transform: [{translateY}]}]}>
       <View style={[styles.type, {backgroundColor: toastColors[type]}]} />
       <Column style={styles.content}>
-        <TitleText text={title} style={{fontWeight: '700', fontSize: 14}} />
-        <NormalText text={message} />
+        <TitleText text={title} style={{fontWeight: 'bold', fontSize: GLOBAL_KEYS.TEXT_SIZE_DEFAULT}} />
+        <NormalText text={message} style={{color: colors.gray700}}/>
       </Column>
     </Animated.View>
   );
@@ -91,12 +91,14 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   content: {
-    paddingVertical: 8,
+    paddingVertical: 12,
     flexDirection: 'column',
+    paddingHorizontal: 12,
+    gap: 0
   },
   type: {
     backgroundColor: colors.success,
-    width: 6,
+    width: 5,
     height: '100%',
     borderTopLeftRadius: 12,
     borderBottomLeftRadius: 12,
