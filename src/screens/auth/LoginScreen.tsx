@@ -55,7 +55,10 @@ const LoginScreen: React.FC = () => {
     Toaster.toast.show({
       message: 'You have been logged in',
     });
-    navigation.navigate(ScreenName.HomeScreen);
+    navigation.reset({
+      index: 0,
+      routes: [{name: ScreenName.BottomTab}],
+    });
   };
 
   return (

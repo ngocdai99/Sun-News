@@ -10,6 +10,7 @@ import SplashScreen from '~/screens/auth/SplashScreen';
 import SignUpScreen from '~/screens/auth/SignUpScreen';
 import {PaperProvider} from 'react-native-paper';
 import CustomHeader from '~/components/headers/CustomHeader';
+import BottomTab from '~/navigation/BottomTab';
 const Stack = createNativeStackNavigator();
 
 const options = {
@@ -40,9 +41,8 @@ export default function App() {
             options={options}
           />
           <Stack.Screen
-            name={ScreenName.HomeScreen}
-            component={HomeScreen}
-            options={options}
+            name={ScreenName.BottomTab}
+            component={BottomTab}
           />
         </Stack.Navigator>
         <ToastHost />

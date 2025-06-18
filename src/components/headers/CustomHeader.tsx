@@ -5,12 +5,14 @@ import {
   StyleSheet,
   StatusBar,
   Pressable,
+  View,
 } from 'react-native';
 import {Icon} from 'react-native-paper';
 import {colors, GLOBAL_KEYS} from '~/constants';
 import {TitleText} from '../texts/TitleText';
 import {widthScreen} from '~/utils/scale';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {LightStatusBar} from '../status-bars/LightStatusBar';
 
 interface CustomHeaderProps {
   title?: string;
@@ -27,7 +29,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
   const navigation = useNavigation();
 
   const routeName = useRoute().name;
-  
+
   const handleGoBack = () => {
     if (navigation.canGoBack()) {
       navigation.goBack();
@@ -43,17 +45,24 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
           paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         },
       ]}>
-      {showBackButton && navigation.canGoBack() && (
-        <Pressable onPress={() => {}}>
+      <LightStatusBar />
+      {showBackButton && navigation.canGoBack() ? (
+        <Pressable onPress={handleGoBack}>
           <Icon source="arrow-left" size={24} color={colors.white} />
         </Pressable>
+      ) : (
+        <View style={{width: 24, height: 24}} />
       )}
 
       <TitleText text={routeName} style={styles.title} />
 
-      <Pressable onPress={rightAction}>
-        <Icon source={rightIcon} size={24} color={colors.white} />
-      </Pressable>
+      {rightAction && rightIcon ? (
+        <Pressable onPress={rightAction}>
+          <Icon source={rightIcon} size={24} color={colors.white} />
+        </Pressable>
+      ) : (
+        <View style={{width: 24, height: 24}} />
+      )}
     </ImageBackground>
   );
 };
