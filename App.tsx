@@ -43,6 +43,7 @@ export default function App() {
           <Stack.Screen
             name={ScreenName.BottomTab}
             component={BottomTab}
+            options={{headerShown: false}}
           />
         </Stack.Navigator>
         <ToastHost />

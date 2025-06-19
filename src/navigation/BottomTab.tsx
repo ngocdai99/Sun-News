@@ -5,8 +5,12 @@ import {useEffect} from 'react';
 import HomeScreen from '~/screens/bottom-navs/HomeScreen';
 import ExploreScreen from '~/screens/bottom-navs/ExploreScreen';
 import BookmarkScreen from '~/screens/bottom-navs/BookmarkScreen';
-import {ScreenName} from '~/constants';
+import {colors, ScreenName} from '~/constants';
 import ProfileScreen from '~/screens/bottom-navs/ProfileScreen';
+import usePermissionLocation from '~/hooks/usePermissionLocation';
+import usePermissionNotification from '~/hooks/usePermissionNotification';
+import CustomHeader from '~/components/headers/CustomHeader';
+
 const locationPermissionRationale = {
   title: 'Cần quyền truy cập vị trí',
   message: 'Ứng dụng cần truy cập vị trí của bạn để hoạt động chính xác.',
@@ -29,20 +33,21 @@ const requestLocationPermission = async () => {
     console.error('Lỗi khi yêu cầu quyền truy cập vị trí:', error);
   }
 };
-
+const options = {
+  headerShown: true,
+  header: () => <CustomHeader />,
+};
 const Tab = createBottomTabNavigator();
 const BottomTab = () => {
-  useEffect(() => {
-    requestLocationPermission().then();
-  }, []);
+  usePermissionLocation();
+  usePermissionNotification();
 
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
         headerShown: false,
         tabBarStyle: {
-          height: 70,
-          paddingTop: 6,
+          height: 60,
         },
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
@@ -57,17 +62,32 @@ const BottomTab = () => {
             iconName = focused ? 'account-circle' : 'account-circle-outline';
           }
 
-          // @ts-ignore
           return <Icon source={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#4D90FE',
-        tabBarInactiveTintColor: '#8e8e8e',
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.gray400,
         tabBarLabelStyle: {fontSize: 12},
       })}>
-      <Tab.Screen name={ScreenName.HomeScreen} component={HomeScreen} />
-      <Tab.Screen name={ScreenName.ExploreScreen} component={ExploreScreen} />
-      <Tab.Screen name={ScreenName.BookmarkScreen} component={BookmarkScreen} />
-      <Tab.Screen name={ScreenName.ProfileScreen} component={ProfileScreen} />
+      <Tab.Screen
+        name={ScreenName.HomeScreen}
+        component={HomeScreen}
+        options={options}
+      />
+      <Tab.Screen
+        name={ScreenName.ExploreScreen}
+        component={ExploreScreen}
+        options={options}
+      />
+      <Tab.Screen
+        name={ScreenName.BookmarkScreen}
+        component={BookmarkScreen}
+        options={options}
+      />
+      <Tab.Screen
+        name={ScreenName.ProfileScreen}
+        component={ProfileScreen}
+        options={options}
+      />
     </Tab.Navigator>
   );
 };
