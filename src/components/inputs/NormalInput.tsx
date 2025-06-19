@@ -7,12 +7,12 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
+  Pressable,
 } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; 
+import {Icon} from 'react-native-paper';
 import {Column} from '~/components';
 import LabelInput from '~/components/inputs/LabelInput';
 import {colors, GLOBAL_KEYS} from '~/constants';
-
 
 interface NormalInputProps extends TextInputProps {
   required: boolean;
@@ -42,6 +42,10 @@ export const NormalInput: React.FC<NormalInputProps> = ({
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const shouldShowEyeIcon = secureTextEntry;
 
+  const isSearchField =
+    label.toLowerCase().includes('search') ||
+    placeholder.toLowerCase().includes('search');
+
   return (
     <Column style={[styles.container, style]}>
       {label && (
@@ -49,6 +53,12 @@ export const NormalInput: React.FC<NormalInputProps> = ({
       )}
 
       <View style={styles.inputWrapper}>
+        {isSearchField && (
+          <View style={styles.leftIconContainer}>
+            <Icon source="magnify" size={20} color={colors.gray400} />
+          </View>
+        )}
+
         <TextInput
           value={value}
           onChangeText={onChangeText}
@@ -60,15 +70,19 @@ export const NormalInput: React.FC<NormalInputProps> = ({
           onSubmitEditing={onSubmitEditing}
           returnKeyType={returnKeyType}
           autoFocus={autoFocus}
-          style={[styles.input, shouldShowEyeIcon && {paddingRight: 36}]}
+          style={[
+            styles.input,
+            shouldShowEyeIcon && {paddingRight: 36},
+            isSearchField && {paddingLeft: 40},
+          ]}
         />
 
         {shouldShowEyeIcon && (
           <TouchableOpacity
             style={styles.eyeIcon}
             onPress={() => setPasswordVisible(!isPasswordVisible)}>
-            <MaterialIcons
-              name={isPasswordVisible ? 'visibility' : 'visibility-off'} 
+            <Icon
+              source={isPasswordVisible ? 'eye' : 'eye-off'}
               size={24}
               color={colors.gray400}
             />
@@ -87,6 +101,7 @@ const styles = StyleSheet.create({
   container: {},
   inputWrapper: {
     position: 'relative',
+    justifyContent: 'center',
   },
   input: {
     fontSize: 14,
@@ -101,6 +116,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 12,
     top: '25%',
+  },
+  leftIconContainer: {
+    position: 'absolute',
+    left: 10,
+    top: '20%',
+    zIndex: 1,
+    padding: 4,
   },
   validationText: {
     color: colors.red800,

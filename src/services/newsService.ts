@@ -14,7 +14,7 @@ const handleApiError = (error: any) => {
   return null;
 };
 
-const getPosts = async (queryString: string) => {
+const getPosts = async (queryString: string = '') => {
   try {
     console.log('queryString', queryString);
     const response = await api.get('/api/guest/posts', {params: queryString});

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, Pressable, StyleSheet} from 'react-native';
-import {TitleText} from '~/components';
-import newsService from '~/services/newService';
+import {NormalInput, TitleText} from '~/components';
+import newsService from '~/services/newsService';
 import {ReduxState, reduxStore, ReduxStoreDispatch} from '~/redux/reduxStore';
 import {useDispatch, useSelector} from 'react-redux';
 import {getCategories, getTags} from '~/redux/reducer/dataReducer/fetchData';
-import {ActivityIndicator} from 'react-native-paper';
+import {ActivityIndicator, Icon} from 'react-native-paper';
 import {colors} from '~/constants';
 
 const ExploreScreen: React.FC = () => {
@@ -24,6 +24,8 @@ const ExploreScreen: React.FC = () => {
 
   const error = useSelector((state: ReduxState) => state.data.error);
 
+  const [keyword, setKeyword] = useState('');
+
   useEffect(() => {
     dispatch(getTags());
     dispatch(getCategories());
@@ -41,42 +43,62 @@ const ExploreScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={dataTags || []}
-        keyExtractor={(item: any) => item.id.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.tagsContainer}
-        renderItem={({item}) => (
-          <Pressable style={styles.tag} onPress={() => {}}>
-            <Text style={styles.tagText}>{item?.name}</Text>
-          </Pressable>
-        )}
+      <NormalInput
+        required={false}
+        onChangeText={setKeyword}
+        value={keyword}
+        placeholder="Search"
       />
 
       <FlatList
-        data={dataCategories || []}
-        keyExtractor={(item: any) => item.id.toString()}
+        data={Array.isArray(dataTags) ? dataTags : []}
+        keyExtractor={(item: any) => item.id}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.tagsContainer}
+        renderItem={({item}) =>
+          item ? (
+            <Pressable style={styles.tag} onPress={() => {}}>
+              <Text style={styles.tagText}>{item.name}</Text>
+            </Pressable>
+          ) : null
+        }
+        ListEmptyComponent={
+          !loadingTags ? (
+            <Text style={{padding: 10, color: '#999'}}>Không có thẻ nào.</Text>
+          ) : null
+        }
+      />
+
+      <FlatList
+        data={Array.isArray(dataCategories) ? dataCategories : []}
+        keyExtractor={(item: any) => item.id}
         numColumns={2}
         contentContainerStyle={styles.categoriesContainer}
-        renderItem={({item, index}) => {
-          const rowIndex = Math.floor(index / 2);
-          const isEvenRow = rowIndex % 2 === 0;
-          const isEvenColumn = index % 2 === 0;
-
-          const backgroundColor =
-            (isEvenRow && isEvenColumn) || (!isEvenRow && !isEvenColumn)
-              ? '#2E7D32'
-              : '#1b5e1f';
-
-          return (
+        renderItem={({item, index}) =>
+          item ? (
             <Pressable
-              style={[styles.categoryBox, {backgroundColor}]}
+              style={[
+                styles.categoryBox,
+                {
+                  backgroundColor:
+                    (Math.floor(index / 2) % 2 === 0) === (index % 2 === 0)
+                      ? '#2E7D32'
+                      : '#1b5e1f',
+                },
+              ]}
               onPress={() => {}}>
               <Text style={styles.categoryText}>{item.name}</Text>
             </Pressable>
-          );
-        }}
+          ) : null
+        }
+        ListEmptyComponent={
+          !loadingCategories ? (
+            <Text style={{padding: 10, color: '#999'}}>
+              Không có danh mục nào.
+            </Text>
+          ) : null
+        }
       />
     </View>
   );
@@ -88,6 +110,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     padding: 16,
     flex: 1,
+    gap: 16,
+    flexDirection: 'column',
   },
   header: {
     backgroundColor: '#003366',

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const baseURL = 'https://api-hnew.e-gate.vn'
+export const baseURL = 'https://api-hnew.e-gate.vn'
 const api = axios.create({
   baseURL: baseURL,
   timeout: 30000,
