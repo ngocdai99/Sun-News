@@ -2,14 +2,14 @@ import api from './api';
 
 const handleApiError = (error: any) => {
   if (error.response) {
-    console.error('Response data:', error.response.data);
-    console.error('Response status:', error.response.status);
-    console.error('Response headers:', error.response.headers);
+    console.log('Response data:', error.response.data);
+    console.log('Response status:', error.response.status);
+    console.log('Response headers:', error.response.headers);
     return error.response;
   } else if (error.request) {
-    console.error('Request error:', error.request);
+    console.log('Request error:', error.request);
   } else {
-    console.error('Error message:', error.message);
+    console.log('Error message:', error.message);
   }
   return null;
 };

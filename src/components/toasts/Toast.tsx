@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
 
     // shadow Android
     elevation: 2,
+    flex: 1,
   },
 
   icon: {
@@ -112,6 +113,7 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: 14,
+    flexShrink: 1,
   },
 });
 

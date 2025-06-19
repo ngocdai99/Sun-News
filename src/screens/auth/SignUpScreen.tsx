@@ -14,6 +14,8 @@ import * as yup from 'yup';
 import {NormalInput, NormalText, PrimaryButton, Row} from '~/components';
 import {colors, ScreenName} from '~/constants';
 import {Toaster} from '~/utils/toaster.ts';
+import {register} from '~/services/auth';
+import {useMutation} from 'react-query';
 
 const schema = yup.object().shape({
   name: yup.string().required('Trường này không được để trống'),
@@ -62,14 +64,29 @@ const SignUpScreen: React.FC = () => {
     }
   };
 
+  const registerFn = useMutation({
+    mutationFn: (data: {name: string; email: string; password: string}) =>
+      register(data),
+    onSuccess: () => {
+      Toaster.toast.show({
+        message: 'Register successfully',
+      });
+      navigation.navigate(ScreenName.LoginScreen);
+    },
+    onError: (error: any) => {
+      console.log('register error', error.response.data);
+      Toaster.message.show({
+        type: 'danger',
+        title: 'Register Error',
+        message: error.response.data.message || 'Có lỗi xảy ra',
+      });
+    },
+  });
+
   const onSubmit = async () => {
     const isValid = await validate();
     if (!isValid) return;
-
-    Toaster.toast.show({
-      message: 'You have been logged in',
-    });
-    navigation.navigate(ScreenName.HomeScreen);
+    await registerFn.mutateAsync({name, email, password});
   };
 
   return (
@@ -128,11 +145,16 @@ const SignUpScreen: React.FC = () => {
                 errors.confirmPassword ? errors.confirmPassword : ''
               }
             />
-            <PrimaryButton title="Sign up" onPress={onSubmit} />
+            <PrimaryButton
+              disabled={registerFn.isLoading}
+              title="Sign up"
+              onPress={onSubmit}
+            />
 
             <Row>
               <Text>Already have an account?</Text>
-              <Pressable>
+              <Pressable
+                onPress={() => navigation.navigate(ScreenName.LoginScreen)}>
                 <Text style={styles.signUp}> Sign in</Text>
               </Pressable>
             </Row>

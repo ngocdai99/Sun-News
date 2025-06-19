@@ -14,6 +14,8 @@ import * as yup from 'yup';
 import {Toaster} from '~/utils/toaster.ts';
 import {colors, ScreenName} from '~/constants';
 import {NormalInput, NormalText, PrimaryButton, Row} from '~/components';
+import {login} from '~/services/auth';
+import {useMutation} from 'react-query';
 
 const schema = yup.object().shape({
   email: yup
@@ -48,17 +50,31 @@ const LoginScreen: React.FC = () => {
     }
   };
 
+  const loginFn = useMutation({
+    mutationFn: (payload: {email: string; password: string}) =>
+      login({email, password}),
+    onSuccess: () => {
+      Toaster.toast.show({
+        type: 'success',
+        message: 'Login successfully',
+      });
+      navigation.navigate(ScreenName.BottomTab);
+    },
+    onError: (error: any) => {
+      console.log('Login error', error.response.data);
+      Toaster.message.show({
+        type: 'danger',
+        title: 'Login Error',
+        message: error.response.data.message || 'Có lỗi xảy ra',
+      });
+    },
+  });
+
   const onSubmit = async () => {
     const isValid = await validate();
     if (!isValid) return;
 
-    Toaster.toast.show({
-      message: 'You have been logged in',
-    });
-    navigation.reset({
-      index: 0,
-      routes: [{name: ScreenName.BottomTab}],
-    });
+    await loginFn.mutateAsync({email, password});
   };
 
   return (

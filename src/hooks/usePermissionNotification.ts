@@ -21,7 +21,7 @@ const requestPermissionNotification = async () => {
       console.log('Quyền gửi thông báo bị từ chối');
     }
   } catch (error) {
-    console.error('Lỗi khi yêu cầu quyền gửi thông báo:', error);
+    console.log('Lỗi khi yêu cầu quyền gửi thông báo:', error);
   }
 };
 const usePermissionNotification = () => {

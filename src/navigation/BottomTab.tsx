@@ -30,7 +30,7 @@ const requestLocationPermission = async () => {
       console.log('Quyền truy cập vị trí bị từ chối');
     }
   } catch (error) {
-    console.error('Lỗi khi yêu cầu quyền truy cập vị trí:', error);
+    console.log('Lỗi khi yêu cầu quyền truy cập vị trí:', error);
   }
 };
 const options = {
