@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     width: widthScreen * 0.9,
     flexDirection: 'row',
     gap: 12,
-    borderRadius: 12,
+    borderRadius: 8,
     backgroundColor: '#FFFFFF',
 
     // shadow iOS
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.success,
     width: 5,
     height: '100%',
-    borderTopLeftRadius: 12,
-    borderBottomLeftRadius: 12,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
 });
 
