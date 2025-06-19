@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getCategories, getTags, getPosts} from './fetchData';
+import {getCategories, getTags, getPosts, getProfile} from './fetchData';
 
 const initialState = {
   error: '',
@@ -13,6 +13,9 @@ const initialState = {
 
   loadingTags: false,
   dataTags: null,
+
+  loadingProfile: false,
+  dataProfile: null,
 };
 
 const DataSlice = createSlice({
@@ -46,13 +49,28 @@ const DataSlice = createSlice({
         state.dataCategories = action.payload;
       })
       .addCase(getTags.pending, state => {
-        (state.loadingTags = true), (state.error = '');
+        state.loadingTags = true;
+        state.error = '';
       })
       .addCase(getTags.rejected, (state, action) => {
-        (state.loadingTags = false), (state.error = action.payload as string);
+        state.loadingTags = false;
+        state.error = action.payload as string;
       })
       .addCase(getTags.fulfilled, (state, action) => {
-        (state.loadingTags = false), (state.dataTags = action.payload);
+        state.loadingTags = false;
+        state.dataTags = action.payload;
+      })
+      .addCase(getProfile.pending, state => {
+        state.loadingProfile = true;
+        state.error = '';
+      })
+      .addCase(getProfile.rejected, (state, action) => {
+        state.loadingProfile = false;
+        state.error = action.payload as string;
+      })
+      .addCase(getProfile.fulfilled, (state, action) => {
+        state.loadingProfile = false;
+        state.dataProfile = action.payload;
       });
   },
 });

@@ -2,6 +2,21 @@ import newsService from '~/services/newsService';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {Alert} from 'react-native';
 
+export const getProfile = createAsyncThunk(
+  'fetchData/getProfile',
+  async (_, thunkAPI) => {
+    try {
+      const response = await newsService.getCurrentUser();
+      console.log('get current user', response.data)
+      return response.data;
+    } catch (error: any) {
+      console.log('get profile', error?.response?.data?.message);
+      return thunkAPI.rejectWithValue(
+        error?.response?.data?.message || 'Lỗi khi tải profile',
+      );
+    }
+  },
+);
 export const getPosts = createAsyncThunk(
   'fetchData/getPosts',
   async (_, thunkAPI) => {

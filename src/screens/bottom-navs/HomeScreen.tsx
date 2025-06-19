@@ -48,7 +48,7 @@ const HomeScreen: React.FC = () => {
     : [];
   const SERVER_STATIC = baseURL + '/storage';
   const renderItem = ({item}) => {
-    console.log(item.image);
+
     return (
       <TouchableOpacity style={styles.card} onPress={() => {}}>
         <Image

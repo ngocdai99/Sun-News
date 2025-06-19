@@ -32,7 +32,7 @@ const getPostDetail = async (id: string) => {
 };
 
 const getPackages = async () => {
-  const response = await api.get(`/api/packages`).catch(handleApiError);
+  const response = await api.get(`/api/packages`);
   return response;
 };
 
@@ -51,7 +51,7 @@ const saveTransaction = async (payload: any) => {
 };
 
 const getCurrentUser = async () => {
-  const response = await api.get(`/api/current-user`).catch(handleApiError);
+  const response = await api.get(`/api/current-user`);
   return response;
 };
 
@@ -89,7 +89,7 @@ const createPaymentGooglePaySheet = (payload: any) => {
 };
 
 const getBookmarks = async () => {
-  const response = await api.get(`/api/bookmarks`).catch(handleApiError);
+  const response = await api.get(`/api/bookmarks`);
   return response;
 };
 const createBookmark = async (payload: any) => {
@@ -107,12 +107,12 @@ const removeBookmark = async (id: string) => {
 };
 
 const getSettings = async () => {
-  const response = await api.get(`/api/guest/settings`).catch(handleApiError);
+  const response = await api.get(`/api/guest/settings`);
   return response;
 };
 
 const getPrices = async () => {
-  const response = await api.get(`/api/prices`).catch(handleApiError);
+  const response = await api.get(`/api/prices`);
   return response;
 };
 
