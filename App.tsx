@@ -12,6 +12,8 @@ import {PaperProvider} from 'react-native-paper';
 import CustomHeader from '~/components/headers/CustomHeader';
 import BottomTab from '~/navigation/BottomTab';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import {Provider as ReduxProvider} from 'react-redux';
+import {reduxStore} from '~/redux/reduxStore';
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -24,34 +26,36 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <PaperProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName={ScreenName.LoginScreen}
-            screenOptions={{headerShown: true}}>
-            <Stack.Screen
-              name={ScreenName.SignUpScreen}
-              component={SignUpScreen}
-              options={options}
-            />
-            <Stack.Screen
-              name={ScreenName.SplashScreen}
-              component={SplashScreen}
-              options={options}
-            />
-            <Stack.Screen
-              name={ScreenName.LoginScreen}
-              component={LoginScreen}
-              options={options}
-            />
-            <Stack.Screen
-              name={ScreenName.BottomTab}
-              component={BottomTab}
-              options={{headerShown: false}}
-            />
-          </Stack.Navigator>
-          <ToastHost />
-          <MessageHost />
-        </NavigationContainer>
+        <ReduxProvider store={reduxStore}>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName={ScreenName.LoginScreen}
+              screenOptions={{headerShown: true}}>
+              <Stack.Screen
+                name={ScreenName.SignUpScreen}
+                component={SignUpScreen}
+                options={options}
+              />
+              <Stack.Screen
+                name={ScreenName.SplashScreen}
+                component={SplashScreen}
+                options={options}
+              />
+              <Stack.Screen
+                name={ScreenName.LoginScreen}
+                component={LoginScreen}
+                options={options}
+              />
+              <Stack.Screen
+                name={ScreenName.BottomTab}
+                component={BottomTab}
+                options={{headerShown: false}}
+              />
+            </Stack.Navigator>
+            <ToastHost />
+            <MessageHost />
+          </NavigationContainer>
+        </ReduxProvider>
       </PaperProvider>
     </QueryClientProvider>
   );

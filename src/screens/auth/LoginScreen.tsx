@@ -1,21 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
-  Button,
-  Pressable,
-} from 'react-native';
-import * as yup from 'yup';
-import {Toaster} from '~/utils/toaster.ts';
-import {colors, ScreenName} from '~/constants';
-import {NormalInput, NormalText, PrimaryButton, Row} from '~/components';
-import {login} from '~/services/auth';
+import {ImageBackground, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useMutation} from 'react-query';
+import * as yup from 'yup';
+import {NormalInput, NormalText, PrimaryButton, Row} from '~/components';
+import {colors, ScreenName} from '~/constants';
+import {login} from '~/services/auth';
+import {Toaster} from '~/utils/toaster.ts';
 
 const schema = yup.object().shape({
   email: yup
@@ -32,7 +23,7 @@ const LoginScreen: React.FC = () => {
   const navigation = useNavigation<any>();
 
   const [email, setEmail] = useState('ngocdaibui99@gmail.com');
-  const [password, setPassword] = useState('123456');
+  const [password, setPassword] = useState('12345678');
   const [errors, setErrors] = useState<{email?: string; password?: string}>({});
 
   const validate = async () => {
