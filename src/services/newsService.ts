@@ -63,15 +63,13 @@ const deleteAccount = async () => {
 };
 
 const getCategories = async (queryString: string = '') => {
-  const response = await api
-    .get('/api/guest/categories', {params: queryString})
-    .catch(handleApiError);
+  const response = await api.get('/api/guest/categories', {
+    params: queryString,
+  });
   return response;
 };
 const getTags = async (queryString: string = '') => {
-  const response = await api
-    .get('/api/guest/tags', {params: queryString})
-    .catch(handleApiError);
+  const response = await api.get('/api/guest/tags', {params: queryString});
   return response;
 };
 

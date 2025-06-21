@@ -1,20 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, Pressable, StyleSheet} from 'react-native';
-import {NormalInput, TitleText} from '~/components';
-import newsService from '~/services/newsService';
-import {ReduxState, reduxStore, ReduxStoreDispatch} from '~/redux/reduxStore';
-import {useDispatch, useSelector} from 'react-redux';
-import {getCategories, getTags} from '~/redux/reducer/dataReducer/fetchData';
-import {ActivityIndicator, Icon} from 'react-native-paper';
-import {colors} from '~/constants';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { NormalInput } from '~/components';
+import { ReduxState, ReduxStoreDispatch } from '~/reduxSaga/reduxStore';
+
+import { ActivityIndicator } from 'react-native-paper';
+import { colors } from '~/constants';
+import { loadExploreData } from '~/reduxSaga/slice/dataSlice';
 
 const ExploreScreen: React.FC = () => {
   const dispatch = useDispatch<ReduxStoreDispatch>();
   const dataCategories = useSelector(
-    (state: ReduxState) => state.data.dataCategories,
+    (state: ReduxState) => state.data.dataCates,
   );
   const loadingCategories = useSelector(
-    (state: ReduxState) => state.data.loadingCategories,
+    (state: ReduxState) => state.data.dataTags,
   );
 
   const loadingTags = useSelector(
@@ -22,16 +22,13 @@ const ExploreScreen: React.FC = () => {
   );
   const dataTags = useSelector((state: ReduxState) => state.data.dataTags);
 
-  const error = useSelector((state: ReduxState) => state.data.error);
-
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
-    dispatch(getTags());
-    dispatch(getCategories());
+    dispatch(loadExploreData());
   }, []);
 
-  console.log('dataTags', JSON.stringify(dataTags, null, 3));
+
 
   if (loadingCategories && loadingTags) {
     return (

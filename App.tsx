@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import HomeScreen from '~/screens/bottom-navs/HomeScreen';
 import LoginScreen from '~/screens/auth/LoginScreen';
 import MessageHost from '~/components/toasts/MessageHost';
@@ -13,7 +13,8 @@ import CustomHeader from '~/components/headers/CustomHeader';
 import BottomTab from '~/navigation/BottomTab';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {Provider as ReduxProvider} from 'react-redux';
-import {reduxStore} from '~/redux/reduxStore';
+import { reduxStore } from '~/reduxSaga/reduxStore';
+
 
 const Stack = createNativeStackNavigator();
 const queryClient = new QueryClient();
@@ -29,7 +30,7 @@ export default function App() {
         <ReduxProvider store={reduxStore}>
           <NavigationContainer>
             <Stack.Navigator
-              initialRouteName={ScreenName.LoginScreen}
+              initialRouteName={ScreenName.BottomTab}
               screenOptions={{headerShown: true}}>
               <Stack.Screen
                 name={ScreenName.SignUpScreen}

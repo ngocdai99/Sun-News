@@ -34,7 +34,7 @@ const ProfileScreen: React.FC = () => {
     : 'No subscription details';
 
   useEffect(() => {
-    dispatch(getProfile());
+    // dispatch(getProfile());
   }, []);
   const renderUtilityItem = useCallback(
     ({item}) => (
