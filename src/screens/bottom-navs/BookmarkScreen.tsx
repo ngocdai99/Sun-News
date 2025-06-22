@@ -54,7 +54,7 @@ const BookmarkScreen: React.FC = () => {
     setName(user.name);
   };
 
-  const onUpdate = async () => {
+  const onUpdate = async (user: User) => {
     try {
       if (selectedUser != null) {
         const success = await updateUser(parseInt(age, 10), selectedUser.id);
@@ -128,7 +128,18 @@ const BookmarkScreen: React.FC = () => {
         )}
       />
       <PrimaryButton title="Add to database" onPress={addUser} />
-      <PrimaryButton title="Update" onPress={onUpdate} />
+      <PrimaryButton
+        style={{
+          backgroundColor:
+            selectedUser != null ? colors.gray850 : colors.disabledBg,
+        }}
+        titleStyle={{
+          color: selectedUser != null ? colors.white : colors.disabledText,
+        }}
+        disabled={selectedUser == null}
+        title="Update"
+        onPress={onUpdate}
+      />
     </View>
   );
 };
