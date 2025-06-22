@@ -64,12 +64,12 @@ const deleteAccount = async () => {
 
 const getCategories = async (queryString: string = '') => {
   const response = await api.get('/api/guest/categories', {
-    params: queryString,
+    params: {queryString},
   });
   return response;
 };
-const getTags = async (queryString: string = '') => {
-  const response = await api.get('/api/guest/tags', {params: queryString});
+const getTags = async (queryString: string = 'arts') => {
+  const response = await api.get('/api/guest/tags', {params: {queryString: queryString}});
   return response;
 };
 

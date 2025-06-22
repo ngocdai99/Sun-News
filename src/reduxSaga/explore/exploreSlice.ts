@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initialState = {
   error: '',
@@ -31,11 +31,31 @@ const exploreSlice = createSlice({
       state.loadingCates = false;
       state.error = action.payload;
     },
+
+    searchTags: (state, action: PayloadAction<{keyword: string}>) => {
+      state.loadingTags = true;
+      state.error = '';
+    },
+
+    searchTagsFulfilled: (state, action) => {
+      state.loadingTags = false;
+      state.dataTags = action.payload.dataTags;
+    },
+
+    searchTagsRejected: (state, action) => {
+      state.loadingTags = false;
+      state.error = action.payload.error;
+    },
   },
 });
 export const {
   loadExploreData,
   loadExploreDataFulfilled,
   loadExploreDataRejected,
+
+  searchTags,
+  searchTagsFulfilled,
+  searchTagsRejected,
 } = exploreSlice.actions;
+
 export default exploreSlice;

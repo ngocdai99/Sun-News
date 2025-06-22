@@ -1,8 +1,10 @@
-import {put, all, call} from 'redux-saga/effects';
+import {put, all, call, delay} from 'redux-saga/effects';
 import {SagaIterator} from 'redux-saga';
 import {
   loadExploreDataFulfilled,
   loadExploreDataRejected,
+  searchTagsFulfilled,
+  searchTagsRejected,
 } from './exploreSlice';
 import newsService from '~/services/newsService';
 
@@ -20,6 +22,25 @@ export function* loadExploreDataWorker(): SagaIterator {
     );
   } catch (error) {
     console.log('redux saga error', error);
-    yield put(loadExploreDataRejected('redux saga error'));
+    yield put(loadExploreDataRejected({error: 'redux saga error'}));
+  }
+}
+
+export function* searchTagsWorker(action: any): SagaIterator {
+  try {
+    yield delay(500);
+    const searchResponse = yield call(
+      newsService.getTags,
+      action.payload.keyword,
+    );
+
+    yield put(
+      searchTagsFulfilled({
+        dataTags: searchResponse.data,
+      }),
+    );
+  } catch (error) {
+    console.log('redux saga error searchTags', error);
+    yield put(searchTagsRejected({error: 'searchTags error'}));
   }
 }

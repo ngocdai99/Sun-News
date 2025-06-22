@@ -6,15 +6,15 @@ import {ReduxState, ReduxStoreDispatch} from '~/reduxSaga/reduxStore';
 
 import {ActivityIndicator} from 'react-native-paper';
 import {colors} from '~/constants';
-import {loadExploreData} from '~/reduxSaga/explore/exploreSlice';
+import {loadExploreData, searchTags} from '~/reduxSaga/explore/exploreSlice';
 
 const ExploreScreen: React.FC = () => {
   const dispatch = useDispatch<ReduxStoreDispatch>();
   const dataCategories = useSelector(
     (state: ReduxState) => state.exploreData.dataCates,
   );
-  const loadingCategories = useSelector(
-    (state: ReduxState) => state.exploreData.dataTags,
+  const loadingCates = useSelector(
+    (state: ReduxState) => state.exploreData.loadingCates,
   );
 
   const loadingTags = useSelector(
@@ -27,17 +27,20 @@ const ExploreScreen: React.FC = () => {
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
+    if (keyword.trim() !== '') {
+      dispatch(searchTags({keyword}));
+    }
+  }, [keyword]);
+
+
+  useEffect(() => {
     dispatch(loadExploreData());
   }, []);
-
-  if (loadingCategories && loadingTags) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator />
-      </View>
-    );
-  }
-
+  
+  const safeDataTags = Array.isArray(dataTags) ? dataTags : [];
+  const safeDataCategories = Array.isArray(dataCategories)
+    ? dataCategories
+    : [];
   return (
     <View style={styles.container}>
       <NormalInput
@@ -48,7 +51,7 @@ const ExploreScreen: React.FC = () => {
       />
 
       <FlatList
-        data={Array.isArray(dataTags) ? dataTags : []}
+        data={safeDataTags}
         keyExtractor={(item: any) => item.id}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -68,7 +71,7 @@ const ExploreScreen: React.FC = () => {
       />
 
       <FlatList
-        data={Array.isArray(dataCategories) ? dataCategories : []}
+        data={safeDataCategories}
         keyExtractor={(item: any) => item.id}
         numColumns={2}
         contentContainerStyle={styles.categoriesContainer}
@@ -90,7 +93,7 @@ const ExploreScreen: React.FC = () => {
           ) : null
         }
         ListEmptyComponent={
-          !loadingCategories ? (
+          !loadingCates ? (
             <Text style={{padding: 10, color: '#999'}}>
               Không có danh mục nào.
             </Text>
