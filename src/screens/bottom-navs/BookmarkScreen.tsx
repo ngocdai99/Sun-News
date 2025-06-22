@@ -54,7 +54,7 @@ const BookmarkScreen: React.FC = () => {
     setName(user.name);
   };
 
-  const onUpdate = async (user: User) => {
+  const onUpdate = async () => {
     try {
       if (selectedUser != null) {
         const success = await updateUser(parseInt(age, 10), selectedUser.id);
