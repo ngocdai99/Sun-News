@@ -42,7 +42,12 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
       style={[
         styles.headerBackground,
         {
-          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+          paddingTop:
+            Platform.OS === 'android'
+              ? StatusBar?.currentHeight
+                ? StatusBar.currentHeight / 2
+                : 60 / 2
+              : 0,
         },
       ]}>
       <LightStatusBar />
@@ -74,6 +79,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 8,
+    // alignItems: 'center'
   },
 
   title: {

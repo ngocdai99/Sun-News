@@ -1,24 +1,24 @@
 import React, {useCallback, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
-import {NormalInput, TitleText} from '~/components';
-import {useSelector, useDispatch} from 'react-redux';
-import {ReduxState, ReduxStoreDispatch} from '~/redux/reduxStore';
-import {getProfile} from '~/redux/reducer/dataReducer/fetchData';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {NormalInput} from '~/components';
+import {ReduxState, ReduxStoreDispatch} from '~/reduxSaga/reduxStore';
+
 import {useNavigation} from '@react-navigation/native';
 import {ActivityIndicator, Icon} from 'react-native-paper';
-import {Toaster} from '~/utils/toaster';
 import {colors} from '~/constants';
+import {loadProfile} from '~/reduxSaga/profile/profileSlice';
 const ProfileScreen: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch<ReduxStoreDispatch>();
   const loadingProfile = useSelector(
-    (state: ReduxState) => state.data.loadingProfile,
+    (state: ReduxState) => state.profileData.loadingProfile,
   );
   const dataProfile = useSelector(
-    (state: ReduxState) => state.data.dataProfile,
+    (state: ReduxState) => state.profileData.dataProfile,
   );
 
-  const error = useSelector((state: ReduxState) => state.data.error);
+  const error = useSelector((state: ReduxState) => state.profileData.error);
 
   const utilities = [
     {
@@ -34,7 +34,7 @@ const ProfileScreen: React.FC = () => {
     : 'No subscription details';
 
   useEffect(() => {
-    // dispatch(getProfile());
+    dispatch(loadProfile());
   }, []);
   const renderUtilityItem = useCallback(
     ({item}) => (

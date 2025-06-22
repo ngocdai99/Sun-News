@@ -3,7 +3,7 @@ import {SagaIterator} from 'redux-saga';
 import {
   loadExploreDataFulfilled,
   loadExploreDataRejected,
-} from '../slice/dataSlice';
+} from './exploreSlice';
 import newsService from '~/services/newsService';
 
 export function* loadExploreDataWorker(): SagaIterator {

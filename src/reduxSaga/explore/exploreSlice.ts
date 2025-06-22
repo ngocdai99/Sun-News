@@ -9,8 +9,8 @@ const initialState = {
   dataCates: null,
 };
 
-const dataSlice = createSlice({
-  name: 'dataSaga',
+const exploreSlice = createSlice({
+  name: 'exploreSlice',
   initialState,
   reducers: {
     loadExploreData: state => {
@@ -37,5 +37,5 @@ export const {
   loadExploreData,
   loadExploreDataFulfilled,
   loadExploreDataRejected,
-} = dataSlice.actions;
-export default dataSlice;
+} = exploreSlice.actions;
+export default exploreSlice;

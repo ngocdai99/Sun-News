@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { NormalInput } from '~/components';
-import { ReduxState, ReduxStoreDispatch } from '~/reduxSaga/reduxStore';
+import React, {useEffect, useState} from 'react';
+import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {NormalInput} from '~/components';
+import {ReduxState, ReduxStoreDispatch} from '~/reduxSaga/reduxStore';
 
-import { ActivityIndicator } from 'react-native-paper';
-import { colors } from '~/constants';
-import { loadExploreData } from '~/reduxSaga/slice/dataSlice';
+import {ActivityIndicator} from 'react-native-paper';
+import {colors} from '~/constants';
+import {loadExploreData} from '~/reduxSaga/explore/exploreSlice';
 
 const ExploreScreen: React.FC = () => {
   const dispatch = useDispatch<ReduxStoreDispatch>();
   const dataCategories = useSelector(
-    (state: ReduxState) => state.data.dataCates,
+    (state: ReduxState) => state.exploreData.dataCates,
   );
   const loadingCategories = useSelector(
-    (state: ReduxState) => state.data.dataTags,
+    (state: ReduxState) => state.exploreData.dataTags,
   );
 
   const loadingTags = useSelector(
-    (state: ReduxState) => state.data.loadingTags,
+    (state: ReduxState) => state.exploreData.loadingTags,
   );
-  const dataTags = useSelector((state: ReduxState) => state.data.dataTags);
+  const dataTags = useSelector(
+    (state: ReduxState) => state.exploreData.dataTags,
+  );
 
   const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     dispatch(loadExploreData());
   }, []);
-
-
 
   if (loadingCategories && loadingTags) {
     return (

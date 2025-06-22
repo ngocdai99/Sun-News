@@ -68,11 +68,11 @@ const BottomTab = () => {
         tabBarInactiveTintColor: colors.gray400,
         tabBarLabelStyle: {fontSize: 12},
       })}>
-      {/* <Tab.Screen
+      <Tab.Screen
         name={ScreenName.HomeScreen}
         component={HomeScreen}
         options={options}
-      /> */}
+      />
       <Tab.Screen
         name={ScreenName.ExploreScreen}
         component={ExploreScreen}
