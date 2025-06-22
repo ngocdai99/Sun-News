@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {NormalInput} from '~/components';
 import {ReduxState, ReduxStoreDispatch} from '~/reduxSaga/reduxStore';
 
-import {ActivityIndicator} from 'react-native-paper';
 import {colors} from '~/constants';
 import {loadExploreData, searchTags} from '~/reduxSaga/explore/exploreSlice';
 
@@ -32,11 +31,10 @@ const ExploreScreen: React.FC = () => {
     }
   }, [keyword]);
 
-
   useEffect(() => {
     dispatch(loadExploreData());
   }, []);
-  
+
   const safeDataTags = Array.isArray(dataTags) ? dataTags : [];
   const safeDataCategories = Array.isArray(dataCategories)
     ? dataCategories
