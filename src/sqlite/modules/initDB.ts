@@ -9,9 +9,17 @@ export const initDB = async () => {
     await db.executeSql(
       `CREATE TABLE IF NOT EXISTS ${tables.users} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER)`,
     );
+ 
+    await db.executeSql(
+      `Create table if not exists ${tables.tags} (
+          id integer primary key,
+          name text,
+          created_at text,
+          updated_at text
+      )`,
+    );
+    await db.close();
   } catch (error) {
     console.log('sqlite error', error);
   }
 };
-
-

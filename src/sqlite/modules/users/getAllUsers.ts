@@ -1,5 +1,5 @@
 import SQLite from 'react-native-sqlite-storage';
-import {openDatabaseParams, tables, User} from '../constants';
+import {openDatabaseParams, tables, User} from '../../constants';
 SQLite.enablePromise(true);
 
 export const getAllUsers = async () => {

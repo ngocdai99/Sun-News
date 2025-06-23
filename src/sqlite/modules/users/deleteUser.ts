@@ -1,19 +1,21 @@
 import SQLite from 'react-native-sqlite-storage';
 import {Toaster} from '~/utils/toaster';
-import {openDatabaseParams, tables, User} from '../constants';
+import {openDatabaseParams, tables} from '../../constants';
 SQLite.enablePromise(true);
 
-export const updateUser = async (age: number, id: number) => {
+export const deleteUser = async (id: number) => {
   const db = await SQLite.openDatabase(openDatabaseParams);
   const [result] = await db.executeSql(
-    `Update ${tables.users} set age = ? where id = ?`,
-    [age, id],
+    `delete from ${tables.users} where id = ?`,
+    [id],
   );
+
+  console.log(`Deleted user ID: ${id}, rows affected: ${result.rowsAffected}`);
+
   Toaster.toast.show({
     type: 'success',
-    message: 'Updated successfully',
+    message: 'Deleted successfully',
   });
-  console.log('rowsAffected', result.rowsAffected);
 
   await db.close();
   return result.rowsAffected > 0;

@@ -1,6 +1,14 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-
-const initialState = {
+import { Tag } from '~/types/Type';
+type ExploreState = {
+  error: string,
+  loading: boolean,
+  loadingTags: boolean,
+  dataTags: Tag[] | null,
+  loadingCates: boolean,
+  dataCates: any[] | null
+}
+const initialState: ExploreState = {
   error: '',
   loading: false,
   loadingTags: false,

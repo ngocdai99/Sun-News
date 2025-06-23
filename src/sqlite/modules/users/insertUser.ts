@@ -1,6 +1,6 @@
 import SQLite from 'react-native-sqlite-storage';
 import {Toaster} from '~/utils/toaster';
-import {openDatabaseParams, tables} from '../constants';
+import {openDatabaseParams, tables} from '../../constants';
 SQLite.enablePromise(true);
 
 export const insertUser = async (name: string, age: string) => {
@@ -12,7 +12,6 @@ export const insertUser = async (name: string, age: string) => {
     return;
   }
 
-  
   const db = await SQLite.openDatabase(openDatabaseParams);
 
   // Check name exists

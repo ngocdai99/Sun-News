@@ -11,8 +11,8 @@ import {
 import {colors} from '~/constants';
 import {getAllUsers, initDB, insertUser} from '~/sqlite';
 import {User} from '~/sqlite/constants';
-import {deleteUser} from '~/sqlite/modules/deleteUser';
-import {updateUser} from '~/sqlite/modules/updateUser';
+import {deleteUser} from '~/sqlite/modules/users/deleteUser';
+import {updateUser} from '~/sqlite/modules/users/updateUser';
 import {Toaster} from '~/utils/toaster';
 
 const BookmarkScreen: React.FC = () => {

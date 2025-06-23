@@ -6,8 +6,11 @@ import {ReduxState, ReduxStoreDispatch} from '~/reduxSaga/reduxStore';
 
 import {colors} from '~/constants';
 import {loadExploreData, searchTags} from '~/reduxSaga/explore/exploreSlice';
+import {readTags, saveTags} from '~/sqlite/modules/tags/saveTags';
+import {Tag} from '~/types/Type';
 
 const ExploreScreen: React.FC = () => {
+  const [tags, setTags] = useState<Tag[]>([]);
   const dispatch = useDispatch<ReduxStoreDispatch>();
   const dataCategories = useSelector(
     (state: ReduxState) => state.exploreData.dataCates,
@@ -32,13 +35,30 @@ const ExploreScreen: React.FC = () => {
   }, [keyword]);
 
   useEffect(() => {
+    const loadTagsFromSQLite = async (): Promise<void> => {
+      const tags = await readTags();
+      console.log('localTags', JSON.stringify(tags, null, 3))
+      setTags(tags);
+    };
+    loadTagsFromSQLite();
     dispatch(loadExploreData());
   }, []);
 
-  const safeDataTags = Array.isArray(dataTags) ? dataTags : [];
+  // save to SQLite
+  useEffect(() => {
+    if (dataTags != null) {
+      if (Array.isArray(dataTags) && dataTags.length > 0) {
+          saveTags(dataTags);
+        setTags(dataTags);
+      
+      }
+    }
+  }, [dataTags]);
+
   const safeDataCategories = Array.isArray(dataCategories)
     ? dataCategories
     : [];
+
   return (
     <View style={styles.container}>
       <NormalInput
@@ -49,8 +69,8 @@ const ExploreScreen: React.FC = () => {
       />
 
       <FlatList
-        data={safeDataTags}
-        keyExtractor={(item: any) => item.id}
+        data={tags}
+        keyExtractor={(item: any) => item.id.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.tagsContainer}

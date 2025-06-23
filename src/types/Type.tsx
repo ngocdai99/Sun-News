@@ -15,3 +15,10 @@ export const toastColors: Record<ToastType, string> = {
   warning: colors.warning,
   offline: colors.violet,
 };
+
+export type Tag = {
+    id: number,
+    created_at: string,
+    updated_at: string,
+    name: string
+}

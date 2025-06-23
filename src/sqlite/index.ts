@@ -1,3 +1,3 @@
-export * from './modules/insertUser'
-export * from './modules/initDB'
-export * from './modules/getAllUsers'
+export * from './modules/users/insertUser';
+export * from './modules/initDB';
+export * from './modules/users/getAllUsers';
