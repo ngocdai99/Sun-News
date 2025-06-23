@@ -6,11 +6,13 @@ import {ReduxState, ReduxStoreDispatch} from '~/reduxSaga/reduxStore';
 
 import {colors} from '~/constants';
 import {loadExploreData, searchTags} from '~/reduxSaga/explore/exploreSlice';
-import {readTags, saveTags} from '~/sqlite/modules/tags/saveTags';
-import {Tag} from '~/types/Type';
+import {readTags, saveTags} from '~/sqlite/modules/explore/tag';
+import {Cate, Tag} from '~/types/Type';
+import {readCates, saveCates} from '~/sqlite/modules/explore/cate';
 
 const ExploreScreen: React.FC = () => {
   const [tags, setTags] = useState<Tag[]>([]);
+  const [cates, setCates] = useState<Cate[]>([]);
   const dispatch = useDispatch<ReduxStoreDispatch>();
   const dataCategories = useSelector(
     (state: ReduxState) => state.exploreData.dataCates,
@@ -35,30 +37,32 @@ const ExploreScreen: React.FC = () => {
   }, [keyword]);
 
   useEffect(() => {
-    const loadTagsFromSQLite = async (): Promise<void> => {
+    const loadFromSQLite = async (): Promise<void> => {
       const tags = await readTags();
-      console.log('localTags', JSON.stringify(tags, null, 3))
-      setTags(tags);
+      const cates = await readCates();
+      if (tags.length > 0) setTags(tags);
+      if (cates.length > 0) setCates(cates);
     };
-    loadTagsFromSQLite();
+    loadFromSQLite();
     dispatch(loadExploreData());
   }, []);
 
-  // save to SQLite
+  // Khi API trả về thành công → update UI + save SQLite
   useEffect(() => {
-    if (dataTags != null) {
-      if (Array.isArray(dataTags) && dataTags.length > 0) {
-          saveTags(dataTags);
-        setTags(dataTags);
-      
-      }
+    if (Array.isArray(dataTags) && dataTags.length > 0) {
+      setTags(dataTags);
+      saveTags(dataTags);
     }
   }, [dataTags]);
 
-  const safeDataCategories = Array.isArray(dataCategories)
-    ? dataCategories
-    : [];
+  useEffect(() => {
+    if (Array.isArray(dataCategories) && dataCategories.length > 0) {
+      setCates(dataCategories);
+      saveCates(dataCategories);
+    }
+  }, [dataCategories]);
 
+  console.log('dataCategories', JSON.stringify(dataCategories, null, 3));
   return (
     <View style={styles.container}>
       <NormalInput
@@ -89,7 +93,7 @@ const ExploreScreen: React.FC = () => {
       />
 
       <FlatList
-        data={safeDataCategories}
+        data={cates}
         keyExtractor={(item: any) => item.id}
         numColumns={2}
         contentContainerStyle={styles.categoriesContainer}

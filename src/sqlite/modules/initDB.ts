@@ -18,6 +18,15 @@ export const initDB = async () => {
           updated_at text
       )`,
     );
+
+    await db.executeSql(
+      `Create table if not exists ${tables.cates} (
+          id integer primary key,
+          name text,
+          created_at text,
+          updated_at text
+      )`
+    )
     await db.close();
   } catch (error) {
     console.log('sqlite error', error);

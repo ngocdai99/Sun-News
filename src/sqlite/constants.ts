@@ -11,5 +11,6 @@ export const openDatabaseParams = {
 
 export const tables = {
   users: 'users',
-  tags: 'tags'
+  tags: 'tags',
+  cates: 'cates'
 };

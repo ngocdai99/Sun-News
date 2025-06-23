@@ -1,10 +1,10 @@
-import { colors } from "~/constants";
+import {colors} from '~/constants';
 
 type FCMMessage = {
-    android: any,
-    body: string,
-    title: string
-}
+  android: any;
+  body: string;
+  title: string;
+};
 
 export type ToastType = 'info' | 'success' | 'danger' | 'warning' | 'offline';
 
@@ -17,8 +17,15 @@ export const toastColors: Record<ToastType, string> = {
 };
 
 export type Tag = {
-    id: number,
-    created_at: string,
-    updated_at: string,
-    name: string
-}
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+};
+
+export type Cate = {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  name: string;
+};
